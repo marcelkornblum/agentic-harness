@@ -6,8 +6,20 @@ Feel free to crib what's here, but it's built for my specific workflows.
 
 ## Structure
 
-- **`/rules`**: Passive knowledge. Markdown files with my specific coding standards, architectural rules, and tone guidelines (e.g., `typescript.md`, `react.md`).
+- **`/rules`**: Passive knowledge. Markdown files with specific coding standards, architectural rules, and persona guidelines.
+    - `general.md`: Project-wide best practices (naming, patterns).
+    - `behaviours.md`: Persona and operational style.
+    - `workflow-routing.md`: Triage and skill dispatch logic.
+    - `python.md`, `html.md`, `css.md`, `javascript.md`: Language-specific standards.
 - **`/skills`**: Active knowledge. Self-contained directories following the Agent Skills structure for complex, multi-step tasks.
+    - `plan-architecture`: Architectural planning with DDD and complexity audits.
+    - `grill-plan`: Adversarial interrogation of plans.
+    - `diagnose-bug`: Scientific debugging loop.
+    - `execute-tdd`: Red-green-refactor loop for logic.
+    - `prototype-ui`: Visual/CSS/Markup loop.
+    - `spike`: Technical exploration and prototyping.
+    - `to-issue`: Project management and issue generation.
+    - `prep-branch`, `commit-and-review`, `manage-pr`: Git lifecycle management.
 
 ## How It Works: Progressive Disclosure
 
