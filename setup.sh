@@ -2,7 +2,22 @@
 set -e
 
 HARNESS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET_DIR="${1:-.}"
+TARGET_DIR="."
+COPY_MODE=false
+
+# Simple argument parsing
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --copy)
+            COPY_MODE=true
+            shift
+            ;;
+        *)
+            TARGET_DIR="$1"
+            shift
+            ;;
+    esac
+done
 
 echo "Configuring AI standards for project at: $(realpath "$TARGET_DIR")"
 
@@ -14,8 +29,12 @@ if [ ! -f "$TEMPLATE_FILE" ]; then
     exit 1
 fi
 
-# Generate the content by replacing the placeholder with the actual harness directory
-CONTENT=$(sed "s|{{HARNESS_DIR}}|$HARNESS_DIR|g" "$TEMPLATE_FILE")
+if [ "$COPY_MODE" = true ]; then
+    echo "Copy mode enabled. Copying harness files to $TARGET_DIR/.harness..."
+    mkdir -p "$TARGET_DIR/.harness"
+    cp -r "$HARNESS_DIR/rules" "$TARGET_DIR/.harness/"
+    cp -r "$HARNESS_DIR/skills" "$TARGET_DIR/.harness/"
+fi
 
 # List of common agent instruction files to target
 TARGET_FILES=(
@@ -32,6 +51,15 @@ TARGET_FILES+=(".github/copilot-instructions.md")
 
 for file in "${TARGET_FILES[@]}"; do
     target_path="$TARGET_DIR/$file"
+    target_dir_path=$(dirname "$target_path")
+
+    if [ "$COPY_MODE" = true ]; then
+        HARNESS_PATH=$(realpath --relative-to="$(realpath "$target_dir_path")" "$(realpath "$TARGET_DIR")/.harness" 2>/dev/null || realpath "$TARGET_DIR/.harness")
+    else
+        HARNESS_PATH="$HARNESS_DIR"
+    fi
+
+    CONTENT=$(sed "s|{{HARNESS_DIR}}|$HARNESS_PATH|g" "$TEMPLATE_FILE")
 
     if [ -f "$target_path" ]; then
         echo "Appending to existing $target_path..."

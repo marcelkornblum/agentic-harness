@@ -37,6 +37,10 @@ To hook these standards into a new project:
     ```bash
     /home/marcel/projects/agentic-harness/setup.sh
     ```
+    To copy the rules and skills into the project (making it self-contained) instead of referencing the central repository:
+    ```bash
+    /home/marcel/projects/agentic-harness/setup.sh --copy
+    ```
 3.  Customize the generated `.cursorrules` to list the specific rules from `/rules/` that apply.
 
 ## Creating New Content

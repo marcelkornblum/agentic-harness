@@ -10,7 +10,7 @@
 
 ## Coding Standards (Passive Rules)
 *Apply these rules comprehensively to all code generation and refactoring.*
-- **Python**: `{{HARNESS_DIR}}/rules/python.md`
+- **Python & Django**: `{{HARNESS_DIR}}/rules/python-django.md`
 - **HTML/SEO**: `{{HARNESS_DIR}}/rules/html.md`
 - **CSS**: `{{HARNESS_DIR}}/rules/css.md`
 - **JavaScript**: `{{HARNESS_DIR}}/rules/javascript.md`

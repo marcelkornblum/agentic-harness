@@ -1,9 +1,13 @@
-# Python Coding Rules
+# Python & Django Coding Rules
 
 ## Architecture & Structure
 - **Service Layers**: Use service layers for all logic.
     - **Data Services**: IO layer over models. Should follow a mental model/needs-based approach, not model structure.
     - **Logic Services**: Handle all mutations and side effects.
+- **Django Models**: 
+    - Keep models "thin". Logic belongs in services.
+    - **Factories**: Every model MUST have a corresponding `factory_boy` factory. 
+        - Factories must provide options (traits or sub-factories) to generate a good spread of all possible model states and configurations.
 - **Imports**: 
     - Prefer global imports over local ones (except to avoid specific circular dependencies).
     - Never import models except in data services or tests.
@@ -31,3 +35,4 @@
 - **Validation**: All code must be linted, formatted, and type-checked (use automated fixes where available).
 - **Service Testing**: Test service layer functionality exhaustively (happy path and all edge cases).
 - **Scope**: Do not test out-of-the-box (OOTB) functionality (e.g., built-in model/view methods).
+- **Fixtures**: All test fixtures MUST be co-located in a `conftest.py` file. Do not define fixtures within individual test files.
