@@ -1,19 +1,17 @@
 ---
 name: diagnose-bug
-description: >
-  Use when the task is to fix an existing defect or bug, rather than building a new feature.
+description: >-
+  Use when diagnosing and fixing an existing defect or regression rather than building a new feature.
 ---
 
-# Instructions
+# Scientific Bug Diagnosis
 
-You are a scientific debugger. Do not guess or "vibe code" fixes. Always state your current workflow step at the start of every response.
+Operate as a scientific debugger: never guess or trial random fixes. State your current workflow step at the start of every turn.
 
-## Core Workflow
-1. **Reproduce**: Write a test or script that reliably reproduces the bug in isolation.
-2. **Minimize**: Strip away irrelevant code from your reproduction case.
-3. **Hypothesize**: State your hypothesis for the root cause clearly.
-4. **Instrument**: Add logging/instrumentation to prove the hypothesis.
-5. **Fix (Red/Green)**: Once proven, write the fix. Ensure the reproduction case now passes.
-6. **Regression Test Log**: Explicitly document the reproduction test case in `docs/regressions.md` (creating it if necessary) to ensure future models understand the fix.
-7. **Regression Test (Full Suite)**: Run the broader test suite.
-8. **Proceed**: Once validated, activate the `commit-and-review` skill (via `activate_skill(name="commit-and-review")`).
+## Workflow
+1. **Reproduce**: Write an isolated test or minimal script that reliably triggers the defect, and run it via the repository's task runner to confirm failure.
+2. **Minimise**: Strip away unrelated setup until only the smallest failing reproduction remains.
+3. **Hypothesise**: State a clear, falsifiable hypothesis for the root cause.
+4. **Prove**: Verify the hypothesis through targeted inspection, logging, or instrumentation before changing production logic. Remove temporary instrumentation once proven.
+5. **Fix (Red/Green)**: Apply the minimal fix complying with active workspace and global rules ( confirming first if the fix requires altering a public contract or schema), and verify the reproduction test passes.
+6. **Regression Check**: Run the broader test and lint suite via the repository's task runner and report the outcome concisely.

@@ -1,50 +1,29 @@
-# Agentic Harness
+# Marcel: Antigravity Plugin & Project Scaffolding
 
-My personal, centralized repository for AI agent skills, instructions, and workflows. This is where I collect my coding best practices and complex workflows so I can reuse them across projects and across different LLM agents (Cursor, Gemini CLI, Cline, etc.) without duplication.
+This repository packages my personal Antigravity customisations into a global plugin alongside starter templates for new repositories.
 
-Feel free to crib what's here, but it's built for my specific workflows.
+Symlinking the repository root into `~/.gemini/config/plugins/marcel` activates the global rules and skills across every workspace automatically, while keeping `templates/` inert until explicitly scaffolded into a project.
 
-## Structure
+```text
+agentic-harness/
+├── plugin.json     # Global plugin manifest ("marcel")
+├── rules/          # Global rules (always_on + model_decision)
+├── skills/         # Global skills (e.g. code-review)
+└── templates/      # Opt-in project rules, skills & CI
+```
 
-- **`/rules`**: Passive knowledge. Markdown files with specific coding standards, architectural rules, and persona guidelines.
-    - `general.md`: Project-wide best practices (naming, patterns).
-    - `behaviours.md`: Persona and operational style.
-    - `workflow-routing.md`: Triage and skill dispatch logic.
-    - `python.md`, `html.md`, `css.md`, `javascript.md`: Language-specific standards.
-- **`/skills`**: Active knowledge. Self-contained directories following the Agent Skills structure for complex, multi-step tasks.
-    - `plan-architecture`: Architectural planning with DDD and complexity audits.
-    - `grill-plan`: Adversarial interrogation of plans.
-    - `diagnose-bug`: Scientific debugging loop.
-    - `execute-tdd`: Red-green-refactor loop for logic.
-    - `prototype-ui`: Visual/CSS/Markup loop.
-    - `spike`: Technical exploration and prototyping.
-    - `to-issue`: Project management and issue generation.
-    - `prep-branch`, `commit-and-review`, `manage-pr`: Git lifecycle management.
+## Global Layer (`rules/` & `skills/`)
 
-## How It Works: Progressive Disclosure
+Global files hold preferences that apply across every session. [interaction.md](./rules/interaction.md) stays active on every turn to govern request triage, `flash` subagent delegation, and Critical Friend behaviour. Other global rules (such as [writing-and-docs.md](./rules/writing-and-docs.md) and baseline language files like [python.md](./rules/python.md)) load on demand via `trigger: model_decision` and yield whenever a workspace defines its own conventions.
 
-This setup keeps agent context lean:
-1.  **Project Initialization**: I link a new project to this repo. The agent reads a lightweight instruction file (e.g., `.cursorrules` or `INSTRUCTIONS.md`) in the target project.
-2.  **Referencing Rules**: That file tells the agent exactly which rules in this repo it needs to follow for that specific stack.
-3.  **Activating Skills**: The agent is pointed to `/skills/` and only pulls in a specific `SKILL.md` when I ask for a task that matches.
+Portable workflows in [skills/](./skills/) separate pre-delivery standards cleanup ([standards](./skills/standards/SKILL.md)), line-anchored diff and PR review ([code-review](./skills/code-review/SKILL.md)), and read-only structural design audits ([architecture-review](./skills/architecture-review/SKILL.md)).
 
-## Setup & Usage
+## Project Scaffolding (`templates/`)
 
-To hook these standards into a new project:
+Architectural choices, component conventions, GitHub Actions PR review pipelines, and Git delivery workflows vary per repository and live under [templates/](./templates/) so they never collide with existing project setups. Run [scaffold-project](./skills/scaffold-project/SKILL.md) to pick, tailor, and install the matching files for a codebase.
 
-1.  Navigate to the target project.
-2.  Run the setup script:
-    ```bash
-    /home/marcel/projects/agentic-harness/setup.sh
-    ```
-    To copy the rules and skills into the project (making it self-contained) instead of referencing the central repository:
-    ```bash
-    /home/marcel/projects/agentic-harness/setup.sh --copy
-    ```
-3.  Customize the generated `.cursorrules` to list the specific rules from `/rules/` that apply.
+## Installation
 
-## Creating New Content
-
-- **New Rule**: Drop a `.md` file in `/rules/`.
-- **New Skill**: Copy `/skills/_template/` and update `SKILL.md`.
-
+```bash
+ln -s /Users/kornblum/projects/agentic-harness ~/.gemini/config/plugins/marcel
+```
