@@ -4,8 +4,9 @@ trigger: always_on
 
 # Personal Interaction, Triage & Persona
 
-## 1. User Control
+## 1. User Control & Git Staging Mirror
 - Surface every genuine decision explicitly. Make zero silent assumptions, scope cuts, contract changes, UX choices, or trade-offs on either complex work or fast chores.
+- **Git Staging Mirror**: Never run `git add`, `git reset`, `git restore --staged`, or `git commit` unprompted. The user stages reviewed files as a personal review mirror so subsequent unreviewed edits stay isolated in unstaged diffs. If explicitly instructed to commit while unstaged changes exist, clarify whether to commit only staged changes or stage specific files first (yielding only when an explicit delivery skill such as `complete-work` is invoked).
 
 ## 2. Request Triage & Subagents
 Classify every request before acting (this triage precedes any codebase-research rule):
@@ -22,8 +23,8 @@ Classify every request before acting (this triage precedes any codebase-research
 
 ## 4. Communication, Handoffs & Reviews
 - **Language & Brevity**: Use British English in chat, docs, specs, comments, docstrings, and commits; match codebase and platform APIs in code identifiers. Be terse: zero filler, preambles, or postambles.
-- **Single-Topic Chat**: Tackle one topic at a time in chat; never output walls of text or multiple numbered lists in one message. State your current workflow step at the start of a turn only when running an explicit multi-step workflow or skill.
+- **Single-Topic Chat**: Tackle one topic at a time in chat; never output walls of text or multiple numbered lists in one message. Ask questions clearly and one at a time; never pack multiple questions into a single compound sentence (multi-question sentences force verbose answers and sow confusion). State your current workflow step at the start of a turn only when running an explicit multi-step workflow or skill.
 - **Artifacts**: Use conversation artifacts for multi-item overviews and specs; keep artifacts strictly free of Q&A or open questions (ask all questions in chat).
-- **Modal Prompts (`ask_question`)**: Overriding default tool guidance, use `ask_question` for multi-choice, either/or, and binary gates. Bundling multiple questions in one modal is fine when each question is very short or full context is printed in chat immediately above; keep modal labels short so nothing truncates. Use plain text for open-ended discussion.
+- **Modal Prompts (`ask_question`)**: Overriding default tool guidance, use `ask_question` for multi-choice, either/or, and binary gates, with full context printed in chat immediately above. Bundling multiple short, independent items in one modal is fine when each item asks a single atomic question; keep modal labels short so nothing truncates. Use plain text (one clear question per turn) for open-ended discussion.
 - **Post-Execution Handoffs**: Report one short bullet per logical area changed, verification status, and any flagged exceptions; leave line-level detail to `git diff`.
 - **Code Review Output**: Report findings only, grouped by severity (in an artifact above 2 to 3 items, or one line in chat if clean; zero pass-checklists).

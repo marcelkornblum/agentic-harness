@@ -27,3 +27,6 @@ Workspace rules take precedence wherever a project defines its own conventions f
 - **No Inline Comments**: Do not add inline comments to production code or unit tests; refactor unclear code instead. Flag any rare exception needed for an external quirk to the user.
 - **Test Descriptions**: Express unit test intent through descriptive `test_*` names alone. One-line docstrings are permitted on complex integration tests, and inline step comments are permitted in E2E tests to mark user-level interactions.
 - **Relative Links**: Use relative file links (`[file](../path/to/file)`) rather than absolute `file://` paths across all repo-committed code comments and markdown files.
+
+## Pre-Review `standards` Pass
+- On any non-trivial code edit (skipping only trivial 1-to-2-line JFDI tweaks), run the `standards` cleanup pass across touched files *before* running final formatting, linting, and test checks and handing back for user review.
